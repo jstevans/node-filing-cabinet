@@ -17,6 +17,7 @@ let amdLookup;
 const stylusLookup = require('stylus-lookup');
 const sassLookup = require('sass-lookup');
 let ts;
+let tsHost;
 
 let resolveDependencyPath;
 const appModulePath = require('app-module-path');
@@ -217,10 +218,10 @@ function tsLookup({dependency, filename, tsConfig}) {
     options.module = ts.ModuleKind.AMD;
   }
 
-  const host = ts.createCompilerHost({});
+  tsHost = ts.createCompilerHost({});
   debug('with options: ', options);
 
-  const namedModule = ts.resolveModuleName(dependency, filename, options, host);
+  const namedModule = ts.resolveModuleName(dependency, filename, options, tsHost);
   let result = '';
 
   if (namedModule.resolvedModule) {
